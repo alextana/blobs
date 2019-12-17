@@ -99,26 +99,26 @@ const createParticles = ({
         // randomize colors conditional -- end
 
         // animate function -- start
-        if (animation !== 'false') {
+        if (animation !== false) {
             animate();
-
             function animate() {
                 // float animation + blobs animation
                 if (animation === 'float' || animation === 'blobs') {
                     setTimeout(function animateParticles() {
                         isFinished = false;
+                        let randomAnimationDuration = Math.floor(Math.random() * animationDuration) + (animationDuration / 2);
                         animatedParticle = singleParticleElement[x].style;
                         if (isFinished === false) {
                             animatedParticle.top = Math.floor(Math.random() * canvasHeight) + 'px';
                             animatedParticle.left = Math.floor(Math.random() * canvasWidth) + 'px';
                             if (animation === 'float') {
                                 animatedParticle.transition =
-                                    `${animationDuration}s top ease-in-out, ${animationDuration}s left ease-in-out`;
+                                    `${randomAnimationDuration}s top ease-in-out, ${randomAnimationDuration}s left ease-in-out`;
                             }
                             if (animation === 'blobs') {
                                 animatedParticle.transition =
                                     `
-                            ${animationDuration}s border-radius ease-in-out, ${animationDuration}s top ease-in-out, ${animationDuration}s left ease-in-out`;
+                            ${randomAnimationDuration}s border-radius ease-in-out, ${randomAnimationDuration}s top ease-in-out, ${randomAnimationDuration}s left ease-in-out`;
                                 animatedParticle.borderRadius =
                                     `
                             ${randomNumberHundredBlob()}% ${randomNumberHundredBlob()}% 
@@ -136,7 +136,7 @@ const createParticles = ({
                                     isFinished = false;
                                     animateParticles();
                                 }
-                            }, animationDuration * 1000);
+                            }, randomAnimationDuration * 1000);
                         }
                     }, 1);
                 }
@@ -146,19 +146,15 @@ const createParticles = ({
     }
 }
 
-
 /* BUILD CHECKLIST 
-
 - Build a controls button [x]
 - Open a controls menu (still to be decided how to style it) [x]
 - Add all the sliders/radio buttons for it []
-- make it draggable [] - not necessary anymore, opted for a slide in
 - use the controls button to change the function's parameters []
 - output the code relevant to the configuration made by the user []
 - have a button to let the user copy the code to the clipboard []
 - build a section for documentation and how to use []
-- add some fun presets []
-
+- add some fun presets (minecraft squares, space, christmas) []
 */
 
 
@@ -170,29 +166,35 @@ const controlsMenuStateHandler = () => {
     closeButton = document.querySelector('.controls__close');
     closeButton.addEventListener('click', function(){
         controlsPanel.classList.remove('controls__active');
-        initSliders();
+        controlsOptions();
     });
 }
 
+const controlsOptions = () => {
 
+    /*
+        RANGE SLIDERS 
+    */
 
- const initSliders = () => {
     let numberSlider, outputNumValue, numberValue,
         sizeSlider, outputSizeValue, sizeValue, 
         borderRadiusSlider, outputRadiusValue, borderRadiusValue,
-        animationDurationSlider, outputDurationValue, animationDurationValue;
+        animationDurationSlider, outputDurationValue, animationDurationValue, animationDurationContainer;
 
+    // declare sliders
     numberSlider = document.querySelector('.numberSlider');
     outputNumValue = document.querySelector('.numberValue');
-
+    
     sizeSlider = document.querySelector('.sizeSlider');
     outputSizeValue = document.querySelector('.sizeValue');
 
     borderRadiusSlider = document.querySelector('.borderRadiusSlider');
     outputRadiusValue = document.querySelector('.borderRadiusValue');
 
-    animationDurationSlider = document.querySelector('.animationDurationSlider') ; 
-    outputDurationValue = document.querySelector('.animationDurationValue')
+    animationDurationSlider = document.querySelector('.animationDurationSlider');
+    // to toggle enable and disable 
+    animationDurationContainer = document.querySelector('.animation__duration');
+    outputDurationValue = document.querySelector('.animationDurationValue');
 
 
 
@@ -201,50 +203,77 @@ const controlsMenuStateHandler = () => {
     outputSizeValue.innerHTML = '150';
     outputRadiusValue.innerHTML = '50';
     outputDurationValue.innerHTML = '20';
+    
 
 
-
+    // set slider values with oninput function
     numberSlider.oninput = function() {
         outputNumValue.innerHTML = this.value;
     }
-
     sizeSlider.oninput = function() {
         outputSizeValue.innerHTML = this.value;
     }
-
     borderRadiusSlider.oninput = function() {
         outputRadiusValue.innerHTML = this.value;
     }
-
     animationDurationSlider.oninput = function() {
         outputDurationValue.innerHTML = this.value;
     }
 
 
+    /* RADIO BUTTONS */
 
-    
-const refreshOutput = () => {
-    const particles = document.querySelector('.particles');
-    particles.innerHTML = '';
-}
+    // animation values for radio buttons 
+    let radioFloat, radioBlobs, radioNoAnim, animationValue;
+        radioFloat = document.getElementById('animatedFloat');
+        radioBlobs = document.getElementById('animatedBlobs');
+        radioNoAnim = document.getElementById('animatedNo');
+
+        
+        
+
+        // conditionals to have animation slider disabled if 
+        // no animation is selected
+
+        
+
+
+    // resets the previous function call so selections don't stack up
+    const refreshOutput = () => {
+        const particles = document.querySelector('.particles');
+        particles.innerHTML = '';
+    }
 
     // on input change fire the function
     document.addEventListener('input', function() {
-
         numberValue = outputNumValue.innerHTML;
         sizeValue = outputSizeValue.innerHTML;
         borderRadiusValue = outputRadiusValue.innerHTML;
         animationDurationValue = outputDurationValue.innerHTML;
+        animationValue = 'float';
+
+        // conditionals for animation Value
+        if(radioFloat.checked === true) {
+            animationValue = 'float';
+            animationDurationContainer.classList.remove('disabled');
+        } else if (radioBlobs.checked === true) {
+            animationValue = 'blobs';
+            animationDurationContainer.classList.remove('disabled');
+        } else if(radioNoAnim.checked === true) {
+            animationValue = false;
+            // disable animationDuration
+            animationDurationContainer.classList.add('disabled');
+        }
+
         refreshOutput();
         createParticles({
             particleNumber: numberValue,
             particleSize: sizeValue,
             particleBorderRadius: borderRadiusValue,
-            animationDuration: animationDurationValue
+            animationDuration: animationDurationValue,
+            animation: animationValue
         })
     })
-
-    
  }
     // particle size slider
     const reinitFunction = () => {
@@ -259,7 +288,7 @@ window.requestAnimFrame = (function(){
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame    ||
             window.ieRequestAnimationFrame     ||
-            function( callback ){
+            function(callback){
               window.setTimeout(callback, 1000 / 60);
             };
   })();

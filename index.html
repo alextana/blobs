@@ -15,10 +15,10 @@
     <div class="controls__container">
       <div
         class="button controls__button"
-        onclick="controlsMenuStateHandler();initSliders();"
-      >
+        onclick="controlsMenuStateHandler();controlsOptions();">
         Open Controls
       </div>
+
     </div>
     <div class="title__container">
       <div class="title">
@@ -73,7 +73,25 @@
               />
             </div>
           </div>
-          <div class="controls__item">
+
+          <div class="controls__item radio__items">
+<p class="pt-2">
+    Animated Particles?
+</p>
+
+<input type="radio" id="animatedFloat" name="animated" value="float">
+<label for="animatedFloat">Float</label>
+
+<input type="radio" id="animatedBlobs" name="animated" value="blobs">
+<label for="animatedBlobs">Blobs</label>
+
+<input type="radio" id="animatedNo" name="animated" value="false">
+<label for="animatedNo">No</label>
+
+</div>
+
+
+          <div class="controls__item animation__duration">
                 <p class="pt-2">
                   Animation Duration: <span class="animationDurationValue"></span>s
                 </p>

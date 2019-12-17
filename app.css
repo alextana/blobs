@@ -123,6 +123,7 @@ body {
 .disabled {
     pointer-events:none;
     opacity: .4;
+    transition: .4s ease-in-out;
 }
 
 .slider__container {
@@ -174,4 +175,14 @@ background: linear-gradient(to right, #3F5EFB, #FC466B); /* W3C, IE 10+/ Edge, F
 
   .pt-2 {
       padding-top: 25px;
+  }
+
+  input[type="radio" i] {
+      margin:0px;
+  }
+
+  .radio__items label {
+      margin-right: 20px;
+      margin-left: 5px;
+      font-weight: bold;
   }
