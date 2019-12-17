@@ -105,7 +105,11 @@ body {
 }
 
 .py {
-    padding: 15px 0px;
+    padding: 5px 0px;
+}
+
+.controls__item span {
+    font-weight: bold;
 }
 
 .py-2 {
@@ -155,4 +159,19 @@ background: linear-gradient(to right, #3F5EFB, #FC466B); /* W3C, IE 10+/ Edge, F
     height: 25px;
     background: #fff;
     cursor: pointer;
+  }
+
+  .fps-container {
+      position: absolute;
+      top: 10px;
+      width: 90px;
+      text-align: center;
+      left: 10px;
+      background: white;
+      color: black;
+      padding: 5px;
+  }
+
+  .pt-2 {
+      padding-top: 25px;
   }

@@ -177,12 +177,50 @@ const controlsMenuStateHandler = () => {
 
 
  const initSliders = () => {
-    let numberSlider, outputNumValue, numberValue;
+    let numberSlider, outputNumValue, numberValue,
+        sizeSlider, outputSizeValue, sizeValue, 
+        borderRadiusSlider, outputRadiusValue, borderRadiusValue,
+        animationDurationSlider, outputDurationValue, animationDurationValue;
+
     numberSlider = document.querySelector('.numberSlider');
     outputNumValue = document.querySelector('.numberValue');
+
+    sizeSlider = document.querySelector('.sizeSlider');
+    outputSizeValue = document.querySelector('.sizeValue');
+
+    borderRadiusSlider = document.querySelector('.borderRadiusSlider');
+    outputRadiusValue = document.querySelector('.borderRadiusValue');
+
+    animationDurationSlider = document.querySelector('.animationDurationSlider') ; 
+    outputDurationValue = document.querySelector('.animationDurationValue')
+
+
+
+    // default values for the first init
+    outputNumValue.innerHTML = '125';
+    outputSizeValue.innerHTML = '150';
+    outputRadiusValue.innerHTML = '50';
+    outputDurationValue.innerHTML = '20';
+
+
+
     numberSlider.oninput = function() {
         outputNumValue.innerHTML = this.value;
     }
+
+    sizeSlider.oninput = function() {
+        outputSizeValue.innerHTML = this.value;
+    }
+
+    borderRadiusSlider.oninput = function() {
+        outputRadiusValue.innerHTML = this.value;
+    }
+
+    animationDurationSlider.oninput = function() {
+        outputDurationValue.innerHTML = this.value;
+    }
+
+
 
     
 const refreshOutput = () => {
@@ -194,28 +232,55 @@ const refreshOutput = () => {
     document.addEventListener('input', function() {
 
         numberValue = outputNumValue.innerHTML;
-        console.log(numberValue);
-
+        sizeValue = outputSizeValue.innerHTML;
+        borderRadiusValue = outputRadiusValue.innerHTML;
+        animationDurationValue = outputDurationValue.innerHTML;
         refreshOutput();
         createParticles({
             particleNumber: numberValue,
+            particleSize: sizeValue,
+            particleBorderRadius: borderRadiusValue,
+            animationDuration: animationDurationValue
         })
     })
 
     
  }
-
     // particle size slider
     const reinitFunction = () => {
         // whenever all the sliders are set and you click the button, the function is reinitialised
-
     }
 
-
-
+// fps counter -- courtesy of Gregg Tavares: https://jsfiddle.net/greggman/ULxVp/
+const fpsChecker = () => {
+// shim layer with setTimeout fallback
+window.requestAnimFrame = (function(){
+    return  window.requestAnimationFrame       ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            window.ieRequestAnimationFrame     ||
+            function( callback ){
+              window.setTimeout(callback, 1000 / 60);
+            };
+  })();
+  var fpsElement = document.querySelector(".fps__counter");
+  var then = Date.now() / 1000;  // get time in seconds
+  var render = function() {
+      var now = Date.now() / 1000;  // get time in seconds
+      // compute time since last frame
+      var elapsedTime = now - then;
+      then = now;
+      // compute fps
+      var fps = 1 / elapsedTime;
+      fpsElement.innerText = fps.toFixed(2) + ' FPS';  
+      requestAnimFrame(render);
+  };
+  render();
+}
 
 // call the functions on dom ready in vanilla js
 document.addEventListener("DOMContentLoaded", function () {
+    // fpsChecker();
     createParticles({
         // set of values that override the defaults
         particleNumber: 170,
