@@ -2,18 +2,18 @@
 const createParticles = ({
     // default values
     particleNumber = 140,
-    particleSize = 2,
+    particleSize = 165,
     colors = {
         firstColor: '#fff',
         secondColor: false,
     },
-    randomizeSize = false,
+    randomizeSize = true,
     particleBorderRadius = 50,
-    randomizeOpacity = false,
-    randomizeColors = false,
-    animation = false,
-    animationDuration = 3,
-    animationLoop = false,
+    randomizeOpacity = true,
+    randomizeColors = true,
+    animation = 'float',
+    animationDuration = 20,
+    animationLoop = true,
     blobs = false,
 }) => {
     let particles, singleParticle, particleCanvas, canvasHeight,
@@ -150,8 +150,9 @@ const createParticles = ({
 /* BUILD CHECKLIST 
 
 - Build a controls button [x]
-- Open a controls menu (still to be decided how to style it) []
-- make it draggable []
+- Open a controls menu (still to be decided how to style it) [x]
+- Add all the sliders/radio buttons for it []
+- make it draggable [] - not necessary anymore, opted for a slide in
 - use the controls button to change the function's parameters []
 - output the code relevant to the configuration made by the user []
 - have a button to let the user copy the code to the clipboard []
@@ -160,6 +161,55 @@ const createParticles = ({
 
 */
 
+
+const controlsMenuStateHandler = () => {
+    let controlsPanel, closeButton;
+    controlsPanel = document.querySelector('.controls__output');
+    controlsPanel.classList.add('controls__active');
+    // close controls
+    closeButton = document.querySelector('.controls__close');
+    closeButton.addEventListener('click', function(){
+        controlsPanel.classList.remove('controls__active');
+        initSliders();
+    });
+}
+
+
+
+ const initSliders = () => {
+    let numberSlider, outputNumValue, numberValue;
+    numberSlider = document.querySelector('.numberSlider');
+    outputNumValue = document.querySelector('.numberValue');
+    numberSlider.oninput = function() {
+        outputNumValue.innerHTML = this.value;
+    }
+
+    
+const refreshOutput = () => {
+    const particles = document.querySelector('.particles');
+    particles.innerHTML = '';
+}
+
+    // on input change fire the function
+    document.addEventListener('input', function() {
+
+        numberValue = outputNumValue.innerHTML;
+        console.log(numberValue);
+
+        refreshOutput();
+        createParticles({
+            particleNumber: numberValue,
+        })
+    })
+
+    
+ }
+
+    // particle size slider
+    const reinitFunction = () => {
+        // whenever all the sliders are set and you click the button, the function is reinitialised
+
+    }
 
 
 

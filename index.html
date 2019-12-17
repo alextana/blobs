@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>blobs.js | Generate particles</title>
-    <link rel="stylesheet" href="app.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="/css/nouislider.css" />
+  </head>
+  <body>
     <div class="controls__container">
-        <div class="button">Open Controls</div>
+      <div
+        class="button controls__button"
+        onclick="controlsMenuStateHandler();initSliders();"
+      >
+        Open Controls
+      </div>
     </div>
+
     <div class="title__container">
-        <div class="title">
-            <h1>blobs.js</h1>
-            <p>Vanilla JS plugin that generates particles</p>
-        </div>
+      <div class="title">
+        <h1>blobs.js</h1>
+        <p>Vanilla JS plugin that generates particles</p>
+      </div>
     </div>
 
     <div class="particle__canvas">
-        <div class="particles"></div>
+      <!-- controls handler -->
+      <div class="controls__output">
+        <div class="controls__container">
+          <div class="button controls__close">Close Controls</div>
+        </div>
+
+        <div class="controls">
+
+          <div class="controls__item">
+            <p class="py">Particle Count: <span class="numberValue"></span></p>
+            <div class="slider__container">
+                <input type="range" min="1" max="550" value="1" class="slider numberSlider">
+            </div>
+          </div>
+
+
+
+        </div>
+
+      </div>
+      <!-- end controls handler -->
+      <div class="particles"></div>
     </div>
+    <script src="/js/nouislider.js"></script>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
