@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="app.css" />
   </head>
   <body>
-    <!-- <div class="fps-container">
+    <div class="fps-container">
         <span class="fps__counter"></div>
-    </div> -->
+    </div>
 
     <div class="controls__container">
       <div
         class="button controls__button"
-        onclick="controlsMenuStateHandler();controlsOptions();">
+        onclick="controlsMenuStateHandler();controlsOptions();"
+      >
         Open Controls
       </div>
-
     </div>
     <div class="title__container">
       <div class="title">
@@ -33,6 +33,7 @@
           <div class="button controls__close">Close Controls</div>
         </div>
         <div class="controls">
+          <!-- particle count -->
           <div class="controls__item">
             <p class="pt-2">
               Particle Count: <span class="numberValue"></span>
@@ -47,6 +48,7 @@
               />
             </div>
           </div>
+          <!-- randomise size -->
           <div class="controls__item">
             <p class="pt-2">Particle Size: <span class="sizeValue"></span>px</p>
             <div class="slider__container">
@@ -59,6 +61,63 @@
               />
             </div>
           </div>
+          <!-- randomise colour -->
+          <div class="controls__item radio__items">
+            <p class="pt-2">Randomize Color</p>
+            <input
+              type="radio"
+              id="randomColorYes"
+              name="randomColor"
+              value="true"
+            />
+            <label for="randomColorYes">Yes</label>
+            <input
+              type="radio"
+              id="randomColorNo"
+              name="randomColor"
+              value="true"
+            />
+            <label for="randomColorNo">No</label>
+          </div>
+          <!-- choose colours -->
+          <div class="control__item text-field choose__colors">
+            <p class="pt-2">Choose Colors (Hex Format)</p>
+            <input
+              type="text"
+              name="chooseColors"
+              id="chooseColor1"
+              placeholder="First Color"
+              minlength="3"
+              maxlength="6"
+            />
+            <input
+              type="text"
+              name="chooseColors"
+              id="chooseColor2"
+              placeholder="Second Color"
+              minlength="3"
+              maxlength="6"
+            />
+          </div>
+          <!-- randomise size -->
+          <div class="controls__item radio__items">
+            <p class="pt-2">Randomize Size</p>
+            <input
+              type="radio"
+              id="randomSizeYes"
+              name="randomSize"
+              value="true"
+            />
+            <label for="randomSizeYes">Yes</label>
+            <input
+              type="radio"
+              id="randomSizeNo"
+              name="randomSize"
+              value="true"
+            />
+            <label for="randomSizeNo">No</label>
+          </div>
+          <!-- particle border radius -->
           <div class="controls__item">
             <p class="pt-2">
               Particle Border Radius: <span class="borderRadiusValue"></span>%
@@ -73,43 +132,52 @@
               />
             </div>
           </div>
-
+          <!-- animated particles -->
           <div class="controls__item radio__items">
-<p class="pt-2">
-    Animated Particles?
-</p>
+            <p class="pt-2">
+              Animated Particles
+            </p>
+            <input
+              type="radio"
+              id="animatedFloat"
+              name="animated"
+              value="float"
+            />
+            <label for="animatedFloat">Float</label>
+            <input
+              type="radio"
+              id="animatedBlobs"
+              name="animated"
+              value="blobs"
+            />
+            <label for="animatedBlobs">Blobs</label>
 
-<input type="radio" id="animatedFloat" name="animated" value="float">
-<label for="animatedFloat">Float</label>
-
-<input type="radio" id="animatedBlobs" name="animated" value="blobs">
-<label for="animatedBlobs">Blobs</label>
-
-<input type="radio" id="animatedNo" name="animated" value="false">
-<label for="animatedNo">No</label>
-
-</div>
-
-
+            <input type="radio" id="animatedNo" name="animated" value="false" />
+            <label for="animatedNo">No</label>
+          </div>
+          <!-- animation duration -->
           <div class="controls__item animation__duration">
-                <p class="pt-2">
-                  Animation Duration: <span class="animationDurationValue"></span>s
-                </p>
-                <div class="slider__container">
-                  <input
-                    type="range"
-                    min="1"
-                    max="100"
-                    value="20"
-                    class="slider animationDurationSlider"
-                  />
-                </div>
-              </div>
+            <p class="pt-2">
+              Animation Duration: <span class="animationDurationValue"></span>s
+            </p>
+            <div class="slider__container">
+              <input
+                type="range"
+                min="1"
+                max="100"
+                value="20"
+                class="slider animationDurationSlider"
+              />
+            </div>
+          </div>
         </div>
       </div>
       <!-- end controls handler -->
       <div class="particles"></div>
     </div>
     <script src="app.js"></script>
-  </body>
+
+
+  
+</body>
 </html>

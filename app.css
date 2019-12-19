@@ -58,6 +58,7 @@ body {
 }
 
 .controls__container {
+
     position: absolute;
     right: 20px;
     top:20px;
@@ -107,7 +108,10 @@ body {
 .py {
     padding: 5px 0px;
 }
-
+.controls__item  *{
+    
+    transition: opacity .4s ease-in-out;
+}
 .controls__item span {
     font-weight: bold;
 }
@@ -123,7 +127,7 @@ body {
 .disabled {
     pointer-events:none;
     opacity: .4;
-    transition: .4s ease-in-out;
+    transition: .4s all ease-in-out;
 }
 
 .slider__container {
@@ -186,3 +190,15 @@ background: linear-gradient(to right, #3F5EFB, #FC466B); /* W3C, IE 10+/ Edge, F
       margin-left: 5px;
       font-weight: bold;
   }
+
+  .hidden {
+     display: none;
+}
+
+.text-field input {
+    padding: 7px 8px;
+    border: none;
+    border-radius: 40px;
+    margin-right: 5px;
+    min-width: 130px;
+}

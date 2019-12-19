@@ -1,4 +1,7 @@
 'use strict';
+// check how many times the menu has been opened
+let counter = 0;
+// create particles is the init function and these are the default properties
 const createParticles = ({
     // default values
     particleNumber = 140,
@@ -111,10 +114,12 @@ const createParticles = ({
                         if (isFinished === false) {
                             animatedParticle.top = Math.floor(Math.random() * canvasHeight) + 'px';
                             animatedParticle.left = Math.floor(Math.random() * canvasWidth) + 'px';
+                            // float animation
                             if (animation === 'float') {
                                 animatedParticle.transition =
                                     `${randomAnimationDuration}s top ease-in-out, ${randomAnimationDuration}s left ease-in-out`;
                             }
+                            // blobs animation
                             if (animation === 'blobs') {
                                 animatedParticle.transition =
                                     `
@@ -172,6 +177,10 @@ const controlsMenuStateHandler = () => {
 
 const controlsOptions = () => {
 
+    /* reinit defaults only the first time it's opened */
+
+
+
     /*
         RANGE SLIDERS 
     */
@@ -198,11 +207,6 @@ const controlsOptions = () => {
 
 
 
-    // default values for the first init
-    outputNumValue.innerHTML = '125';
-    outputSizeValue.innerHTML = '150';
-    outputRadiusValue.innerHTML = '50';
-    outputDurationValue.innerHTML = '20';
     
 
 
@@ -232,11 +236,56 @@ const controlsOptions = () => {
         
         
 
-        // conditionals to have animation slider disabled if 
-        // no animation is selected
+    // randomize size values
+    let randomSizeYes, randomSizeNo, randomSize;
+        randomSizeYes = document.getElementById('randomSizeYes');
+        randomSizeNo = document.getElementById('randomSizeNo'); 
 
-        
+    // randomize Color values
+    let randomColorYes, randomColorNo, randomColor;
+        randomColorYes = document.getElementById('randomColorYes');
+        randomColorNo = document.getElementById('randomColorNo'); 
 
+
+    // text input fields 
+
+    let chooseColor1, chooseColor2, chooseColorsElement;
+        chooseColor1 = document.getElementById('chooseColor1');
+        chooseColor2 = document.getElementById('chooseColor2');
+        chooseColorsElement = document.querySelector('.choose__colors');
+
+
+        // conditional for text input color choice 
+        // this needs a validation => check if the string is hex
+        // if not hex don't run the function
+        // maybe have a converter built in? 
+        // so the user can use whichever value they prefer?
+        let colorInput1, colorInput2;
+
+        colorInput1 = document.querySelector('#chooseColor1');
+        colorInput2 = document.querySelector('#chooseColor2');
+         
+
+
+    // default values for the first init
+    if(counter === 0) {
+    outputNumValue.innerHTML = '125';
+    outputSizeValue.innerHTML = '150';
+    outputRadiusValue.innerHTML = '50';
+    outputDurationValue.innerHTML = '20';
+    randomColorYes.checked = true;
+    randomSizeYes.checked = true;
+    radioFloat.checked = true;
+    // choose colors hidden by default because 
+    // randomise colours is set as true by default
+    chooseColorsElement.classList.add('hidden');
+    colorInput1.value = 'ff0000';
+    colorInput2.value = '242424';
+    counter++;
+}   
+
+
+    
 
     // resets the previous function call so selections don't stack up
     const refreshOutput = () => {
@@ -251,28 +300,58 @@ const controlsOptions = () => {
         borderRadiusValue = outputRadiusValue.innerHTML;
         animationDurationValue = outputDurationValue.innerHTML;
         animationValue = 'float';
+        randomSize = true;
 
         // conditionals for animation Value
         if(radioFloat.checked === true) {
             animationValue = 'float';
-            animationDurationContainer.classList.remove('disabled');
+            animationDurationContainer.classList.remove('hidden');
         } else if (radioBlobs.checked === true) {
             animationValue = 'blobs';
-            animationDurationContainer.classList.remove('disabled');
+            animationDurationContainer.classList.remove('hidden');
         } else if(radioNoAnim.checked === true) {
             animationValue = false;
             // disable animationDuration
-            animationDurationContainer.classList.add('disabled');
+            animationDurationContainer.classList.add('hidden');
         }
 
+        
+
+        // conditionals for randomize size
+        if(randomSizeYes.checked === true) {
+            randomSize = true;
+        } else if(randomSizeNo.checked === true) {
+            randomSize = false;
+        }
+
+        // conditionals for randomize Color
+        if(randomColorYes.checked === true) {
+            chooseColorsElement.classList.add('hidden');
+            randomColor = true;
+            
+        } else if(randomColorNo.checked === true) {
+            chooseColorsElement.classList.remove('hidden');
+            randomColor = false;
+        }
+
+
+       
         refreshOutput();
         createParticles({
             particleNumber: numberValue,
             particleSize: sizeValue,
             particleBorderRadius: borderRadiusValue,
             animationDuration: animationDurationValue,
-            animation: animationValue
+            animation: animationValue,
+            randomizeSize: randomSize,
+            randomizeColors: randomColor,
+            colors: {
+                firstColor: '#' + colorInput1.value,
+                secondColor: '#' + colorInput2.value
+            }
         })
+
+       
     })
  }
     // particle size slider
@@ -309,7 +388,7 @@ window.requestAnimFrame = (function(){
 
 // call the functions on dom ready in vanilla js
 document.addEventListener("DOMContentLoaded", function () {
-    // fpsChecker();
+    fpsChecker();
     createParticles({
         // set of values that override the defaults
         particleNumber: 170,
