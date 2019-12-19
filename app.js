@@ -115,7 +115,7 @@ const createParticles = ({
     // randomize colors conditional -- end
 
     // animate function -- start
-    if (animation !== false) {
+    if (animation !== 'none') {
       animate();
       function animate() {
         // float animation + blobs animation
@@ -323,7 +323,7 @@ const controlsOptions = () => {
       animationValue = "blobs";
       animationDurationContainer.classList.remove("hidden");
     } else if (radioNoAnim.checked === true) {
-      animationValue = false;
+      animationValue = 'none';
       // disable animationDuration
       animationDurationContainer.classList.add("hidden");
     }
@@ -373,13 +373,14 @@ const controlsOptions = () => {
       particleSize: ${sizeValue},
       particleBorderRadius: ${borderRadiusValue},
       animationDuration: ${animationDurationValue},
-      animation: ${animationValue},
+      animation: '${animationValue}',
       randomizeSize: ${randomSize},
       randomizeOpacity: ${randomOpacity},
       randomizeColors: ${randomColor},
       colors: {
-        firstColor: #${colorInput1.value},
-        secondColor: #${colorInput2.value}
+        firstColor: '${colorInput1.value}',
+        secondColor: '${colorInput2.value}'
+      }
     });`;
 
     let textArea = document.querySelector(".text__area");
@@ -392,6 +393,7 @@ const reinitFunction = () => {
 };
 
 // fps counter -- courtesy of Gregg Tavares: https://jsfiddle.net/greggman/ULxVp/
+// only for performance measuring
 const fpsChecker = () => {
   // shim layer with setTimeout fallback
   window.requestAnimFrame = (function() {
