@@ -202,3 +202,35 @@ background: linear-gradient(to right, #3F5EFB, #FC466B); /* W3C, IE 10+/ Edge, F
     margin-right: 5px;
     min-width: 130px;
 }
+
+.input-text__container {
+    position: relative;
+    width: 100%;
+}
+
+.output__code {
+    transition: .3s ease-in-out;
+}
+.button {
+    transition: .3s ease-in-out;
+}
+.text__area {
+    display: block;
+    width: 80%;
+    min-height: 250px;
+    background: none;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+    border: none;
+    padding:10px 0px;
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+}
