@@ -1,4 +1,9 @@
 "use strict";
+const versionText = () => {
+  let version;
+  version = document.querySelector('.version__text');
+  version.innerText = 'version 1.0.0'
+}
 // check how many times the menu has been opened
 let counter = 0;
 // create particles is the init function and these are the default properties
@@ -405,6 +410,7 @@ const fpsChecker = () => {
 
 // call the functions on dom ready in vanilla js
 document.addEventListener("DOMContentLoaded", function() {
+  versionText();
   minifiedLinkHandler();
   textAreaHeight();
   renderHTML();
