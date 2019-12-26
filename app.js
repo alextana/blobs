@@ -284,8 +284,8 @@ const controlsOptions = () => {
     // choose colors hidden by default because
     // randomise colours is set as true by default
     chooseColorsElement.classList.add("hidden");
-    colorInput1.value = "blue";
-    colorInput2.value = "lightblue";
+    colorInput1.value = "ff0000";
+    colorInput2.value = "ffffff";
     counter++;
   }
 
