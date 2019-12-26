@@ -37,7 +37,7 @@ const createParticles = ({
 
   // create particles
   particles = document.querySelector(".particles");
-  for (let i = 0; i < particleNumber; i++) {
+  for (let i=0; i<particleNumber; i++) {
     singleParticle = document.createElement("div");
     singleParticle.classList.add("particle__element");
     particles.appendChild(singleParticle);
@@ -50,7 +50,7 @@ const createParticles = ({
   canvasWidth = particleCanvas.clientWidth;
 
   // apply styles to the single particles
-  for (let x = 0; x < singleParticleElement.length; x++) {
+  for (let x=0; x<singleParticleElement.length; x++) {
     particleStyle = singleParticleElement[x].style;
     particleTop = Math.floor(Math.random() * canvasHeight);
     particleLeft = Math.floor(Math.random() * canvasWidth);
@@ -167,36 +167,26 @@ const createParticles = ({
   }
 };
 
-/* BUILD CHECKLIST 
-- Build a controls button [x]
-- Open a controls menu (still to be decided how to style it) [x]
-- Add all the sliders/radio buttons for it [x]
-- use the controls button to change the function's parameters [x]
-- output the code relevant to the configuration made by the user []
-- have a button to let the user copy the code to the clipboard []
-- build a section for documentation and how to use []
-- add some fun presets (minecraft squares, space, christmas) []
-*/
-
 const controlsMenuStateHandler = () => {
-  let controlsPanel, closeButton;
+  let controlsPanel, closeButton, overlay;
   controlsPanel = document.querySelector(".controls__output");
   controlsPanel.classList.add("controls__active");
+  overlay = document.querySelector('.overlay');
+  overlay.style.display = 'block';
   // close controls
   closeButton = document.querySelector(".controls__close");
   closeButton.addEventListener("click", function() {
     controlsPanel.classList.remove("controls__active");
+    overlay.style.display = 'none';
     controlsOptions();
   });
+  overlay.addEventListener('click', function() {
+    closeButton.click();
+    overlay.style.display = 'none';
+  })
 };
 
 const controlsOptions = () => {
-  /* reinit defaults only the first time it's opened */
-
-  /*
-        RANGE SLIDERS 
-    */
-
   let numberSlider,
     outputNumValue,
     numberValue,
@@ -270,11 +260,7 @@ const controlsOptions = () => {
   chooseColor2 = document.getElementById("chooseColor2");
   chooseColorsElement = document.querySelector(".choose__colors");
 
-  // conditional for text input color choice
-  // this needs a validation => check if the string is hex
-  // if not hex don't run the function
-  // maybe have a converter built in?
-  // so the user can use whichever value they prefer?
+  // colour input fields
   let colorInput1, colorInput2;
 
   colorInput1 = document.querySelector("#chooseColor1");
@@ -293,8 +279,8 @@ const controlsOptions = () => {
     // choose colors hidden by default because
     // randomise colours is set as true by default
     chooseColorsElement.classList.add("hidden");
-    colorInput1.value = "ff0000";
-    colorInput2.value = "242424";
+    colorInput1.value = "blue";
+    colorInput2.value = "lightblue";
     counter++;
   }
 
@@ -387,10 +373,7 @@ const controlsOptions = () => {
     textArea.innerHTML = outputCode;
   });
 };
-// particle size slider
-const reinitFunction = () => {
-  // whenever all the sliders are set and you click the button, the function is reinitialised
-};
+
 
 // fps counter -- courtesy of Gregg Tavares: https://jsfiddle.net/greggman/ULxVp/
 // only for performance measuring
@@ -408,13 +391,11 @@ const fpsChecker = () => {
     );
   })();
   var fpsElement = document.querySelector(".fps__counter");
-  var then = Date.now() / 1000; // get time in seconds
-  var render = function() {
-    var now = Date.now() / 1000; // get time in seconds
-    // compute time since last frame
+  var then = Date.now() / 1000;
+    var render = function() {
+    var now = Date.now() / 1000; 
     var elapsedTime = now - then;
     then = now;
-    // compute fps
     var fps = 1 / elapsedTime;
     fpsElement.innerText = fps.toFixed(2) + " FPS";
     requestAnimFrame(render);
@@ -424,6 +405,9 @@ const fpsChecker = () => {
 
 // call the functions on dom ready in vanilla js
 document.addEventListener("DOMContentLoaded", function() {
+  minifiedLinkHandler();
+  textAreaHeight();
+  renderHTML();
   // fpsChecker();
   createParticles({
     // set of values that override the defaults
@@ -444,6 +428,13 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+// minified link handler
+const minifiedLinkHandler = () => {
+  let minifiedInput;
+  minifiedInput = document.querySelector('#minifiedJS');
+  minifiedInput.value = '<script src="' + location.protocol + '//' + location.host + '/app.min.js' + '"></script>'
+}
+
 // copy to clipboard handler
 const copyToClipboard = () => {
   let textArea, outputCode, button;
@@ -457,3 +448,19 @@ const copyToClipboard = () => {
     button.innerHTML = 'Copy to Clipboard'
   }, 2500);
 };
+
+const renderHTML = () => {
+  let htmlRender = document.querySelector('.textarea-html__output');
+  htmlRender.innerText = `<div class="particle__canvas">
+  <div class="particles"></div>
+  </div>`
+  ;
+}
+const textAreaHeight = () => {
+  let textarea;
+  textarea = document.querySelectorAll('.textarea__output');
+  for(var i=0; i<textarea.length; i++) {
+    textarea[i].style.height = textarea[i].scrollHeight + 'px';
+
+  }
+}
